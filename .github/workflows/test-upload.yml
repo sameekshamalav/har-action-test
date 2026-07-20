@@ -12,6 +12,13 @@ jobs:
       - name: Create test file
         run: echo "hello from github actions" > hello.txt
 
+      - name: Debug
+        run: |
+              echo "Key starts with: ${HARNESS_API_KEY:0:10}..."
+              echo "Account ID: ${{ secrets.HARNESS_ACCOUNT_ID }}"
+        env: 
+          HARNESS_API_KEY: ${{ secrets.HARNESS_API_KEY }}
+
       - name: Upload to HAR
         uses: sameekshamalav/upload-to-har-action@v1
         with:
