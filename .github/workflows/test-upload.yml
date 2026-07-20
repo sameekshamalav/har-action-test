@@ -18,6 +18,12 @@ jobs:
               echo "Account ID: ${{ secrets.HARNESS_ACCOUNT_ID }}"
         env: 
           HARNESS_API_KEY: ${{ secrets.HARNESS_API_KEY }}
+      - name: Raw curl from GitHub runner
+        run: |
+           echo "hello from github runner" > test.txt
+           curl -X PUT "https://pkg.qa.harness.io/pkg/${{ secrets.HARNESS_ACCOUNT_ID }}/ga_test/files/hello-artifact/1.0.0/curl-test.txt" --header "x-api-key: ${{ secrets.HARNESS_API_KEY }}" \
+           -T ./test.txt \
+           -v 2>&1 | tail -30
 
       - name: Upload to HAR
         uses: sameekshamalav/upload-to-har-action@v1
